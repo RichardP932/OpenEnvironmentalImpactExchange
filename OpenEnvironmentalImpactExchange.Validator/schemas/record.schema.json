@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/oeie/schema/0.1.0/record.schema.json",
+  "title": "Open Environmental Impact Exchange record (draft 0.1.0)",
+  "description": "Prototype exchange envelope derived from CIP database concepts; not a claim of OGC/Darwin Core/PROV compliance. The example.org identifier is a placeholder and must be replaced before publication.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "formatVersion",
+    "recordId",
+    "incidentDate",
+    "location",
+    "physicalChanges",
+    "ecologicalEffects",
+    "evidence",
+    "climateAssessment"
+  ],
+  "properties": {
+    "formatVersion": {
+      "const": "0.1.0"
+    },
+    "recordId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "incidentDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
+      },
+      "dependentRequired": {
+        "latitude": [
+          "longitude"
+        ],
+        "longitude": [
+          "latitude"
+        ]
+      }
+    },
+    "physicalChanges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/physicalChange"
+      }
+    },
+    "ecologicalEffects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ecologicalEffect"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceSource"
+      }
+    },
+    "climateAssessment": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/climateAssessment"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "physicalChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ENV_EXTREME_HEAT",
+            "ENV_HEATWAVE",
+            "ENV_EXTREME_COLD",
+            "ENV_EXTREME_RAINFALL",
+            "ENV_SEVERE_STORM",
+            "ENV_TROPICAL_CYCLONE",
+            "ENV_TORNADO",
+            "ENV_EXTREME_SNOWFALL",
+            "ENV_DROUGHT",
+            "ENV_REDUCED_WATER_AVAILABILITY",
+            "ENV_REDUCED_RIVER_FLOW",
+            "ENV_LAKE_POND_DRYING",
+            "ENV_GROUNDWATER_DECLINE",
+            "ENV_FLOODING",
+            "ENV_SEA_LEVEL_RISE",
+            "ENV_EXTREME_COASTAL_WATER_LEVEL",
+            "ENV_STORM_SURGE",
+            "ENV_COASTAL_FLOODING",
+            "ENV_HIGH_TIDE_FLOODING",
+            "ENV_COASTAL_EROSION",
+            "ENV_SALTWATER_INTRUSION",
+            "ENV_OCEAN_WARMING",
+            "ENV_MARINE_HEATWAVE",
+            "ENV_OCEAN_ACIDIFICATION",
+            "ENV_OCEAN_DEOXYGENATION",
+            "ENV_GLACIER_RETREAT",
+            "ENV_SNOW_COVER_DECLINE",
+            "ENV_SEA_ICE_DECLINE",
+            "ENV_PERMAFROST_THAW",
+            "ENV_WILDFIRE",
+            "ENV_LANDSLIDE",
+            "ENV_SOIL_MOISTURE_DECLINE",
+            "ENV_SOIL_DEGRADATION",
+            "ENV_DESERTIFICATION",
+            "ENV_EROSION",
+            "ENV_OTHER",
+            "ENV_UNKNOWN"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "OBS_DIRECT",
+            "OBS_MEASURED",
+            "OBS_REPORTED_SOURCE",
+            "OBS_INFERRED",
+            "OBS_ESTIMATED",
+            "OBS_SUSPECTED",
+            "OBS_CLAIMED",
+            "OBS_UNKNOWN"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "ecologicalEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ECO_MORTALITY",
+            "ECO_MASS_MORTALITY",
+            "ECO_PHYSIOLOGICAL_STRESS",
+            "ECO_DISEASE_INCREASE",
+            "ECO_BIODIVERSITY_LOSS",
+            "ECO_POPULATION_DECLINE",
+            "ECO_REDUCED_ABUNDANCE",
+            "ECO_POPULATION_INCREASE",
+            "ECO_LOCAL_DISAPPEARANCE",
+            "ECO_LOCAL_EXTINCTION",
+            "ECO_GLOBAL_EXTINCTION",
+            "ECO_BREEDING_FAILURE",
+            "ECO_REDUCED_BREEDING_SUCCESS",
+            "ECO_RECRUITMENT_FAILURE",
+            "ECO_RANGE_CONTRACTION",
+            "ECO_RANGE_EXPANSION",
+            "ECO_RANGE_SHIFT",
+            "ECO_PHENOLOGY_CHANGE",
+            "ECO_HABITAT_LOSS",
+            "ECO_HABITAT_DEGRADATION",
+            "ECO_HABITAT_FRAGMENTATION",
+            "ECO_COMMUNITY_COMPOSITION_CHANGE",
+            "ECO_POLLINATION_DECLINE",
+            "ECO_DECOMPOSITION_CHANGE",
+            "ECO_NUTRIENT_CYCLING_CHANGE",
+            "ECO_ECOSYSTEM_FUNCTION_DECLINE",
+            "ECO_CORAL_BLEACHING",
+            "ECO_CORAL_MORTALITY",
+            "ECO_NON_NATIVE_ESTABLISHMENT",
+            "ECO_NON_NATIVE_SPREAD",
+            "ECO_OTHER",
+            "ECO_CHANGE_UNCHARACTERISED",
+            "ECO_UNKNOWN"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "OBS_DIRECT",
+            "OBS_MEASURED",
+            "OBS_REPORTED_SOURCE",
+            "OBS_INFERRED",
+            "OBS_ESTIMATED",
+            "OBS_SUSPECTED",
+            "OBS_CLAIMED",
+            "OBS_UNKNOWN"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "evidenceSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "organisation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "climateAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationship"
+      ],
+      "properties": {
+        "relationship": {
+          "type": "string",
+          "enum": [
+            "CLIMATE_DIRECT",
+            "CLIMATE_CONTRIBUTING",
+            "CLIMATE_CASCADING",
+            "CLIMATE_UNCERTAIN",
+            "CLIMATE_NO_DEMONSTRATED_LINK",
+            "CLIMATE_NOT_ASSESSED"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

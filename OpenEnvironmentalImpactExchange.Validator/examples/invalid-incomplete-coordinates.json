@@ -1,0 +1,19 @@
+{
+  "formatVersion": "0.1.0",
+  "recordId": "00000000-0000-4000-8000-000000000001",
+  "incidentDate": "2022-07-19",
+  "location": {
+    "latitude": 51.2
+  },
+  "physicalChanges": [
+    {
+      "id": "physical-1",
+      "type": "ENV_HEATWAVE",
+      "status": "OBS_REPORTED_SOURCE",
+      "description": "July 2022 UK heatwave"
+    }
+  ],
+  "ecologicalEffects": [],
+  "evidence": [],
+  "climateAssessment": null
+}

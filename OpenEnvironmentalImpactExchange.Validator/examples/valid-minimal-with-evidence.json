@@ -1,0 +1,21 @@
+{
+  "formatVersion": "0.1.0",
+  "recordId": "00000000-0000-4000-8000-000000000002",
+  "incidentDate": "2022-07-19",
+  "location": {
+    "name": "Example locality",
+    "latitude": 50.9,
+    "longitude": 0.1
+  },
+  "physicalChanges": [],
+  "ecologicalEffects": [],
+  "evidence": [
+    {
+      "title": "Illustrative source",
+      "url": "https://example.org/source",
+      "organisation": "Example organisation",
+      "sourceDate": "2022-07-20"
+    }
+  ],
+  "climateAssessment": null
+}
