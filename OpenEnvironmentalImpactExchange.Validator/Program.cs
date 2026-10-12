@@ -94,6 +94,36 @@ foreach (var examplePath in exampleFiles)
         if (!results.IsValid)
         {
             hasValidationFailures = true;
+
+            Console.WriteLine("Validation errors:");
+
+            foreach (var detail in results.Details ?? [])
+            {
+                if (detail.IsValid || detail.Errors is null)
+                {
+                    continue;
+                }
+
+                // Ignore errors from the unsuccessful alternative when
+                // climateAssessment: null has satisfied the oneOf schema.
+                if (detail.EvaluationPath.ToString().StartsWith(
+                        "/properties/climateAssessment/oneOf/1",
+                        StringComparison.Ordinal) == true &&
+                    (results.Details ?? []).Any(parent =>
+                        parent.InstanceLocation.ToString() == "/climateAssessment" &&
+                        parent.EvaluationPath.ToString() == "/properties/climateAssessment" &&
+                        parent.IsValid))
+                {
+                    continue;
+                }
+
+                foreach (var error in detail.Errors)
+                {
+                    Console.WriteLine(
+                        $"  {detail.InstanceLocation}: {error.Value}"
+                    );
+                }
+            }
         }
     }
 }
