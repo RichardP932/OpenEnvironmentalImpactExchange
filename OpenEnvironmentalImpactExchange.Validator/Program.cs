@@ -1,5 +1,9 @@
-﻿using System.Text.Json;
+﻿
+using System.Text.Json;
 using Json.Schema;
+
+Console.WriteLine("Open Environmental Impact Exchange Validator");
+Console.WriteLine();
 
 var schemaPath = Path.Combine(
     AppContext.BaseDirectory,
@@ -7,12 +11,10 @@ var schemaPath = Path.Combine(
     "record.schema.json"
 );
 
-Console.WriteLine("Open Environmental Impact Exchange Validator");
-Console.WriteLine();
-
 if (!File.Exists(schemaPath))
 {
     Console.Error.WriteLine($"Schema not found: {schemaPath}");
+    Environment.ExitCode = 2;
     return;
 }
 
@@ -26,32 +28,74 @@ var examplesDirectory = Path.Combine(
     "Examples"
 );
 
-var exampleFiles = Directory.GetFiles(
-    examplesDirectory,
-    "*.json"
-).OrderBy(Path.GetFileName);
+IEnumerable<string> exampleFiles;
+
+if (args.Length > 0)
+{
+    exampleFiles = new[] { args[0] };
+}
+else
+{
+    exampleFiles = Directory.GetFiles(
+        examplesDirectory,
+        "*.json"
+    ).OrderBy(Path.GetFileName);
+}
+
+var hasValidationFailures = false;
 
 foreach (var examplePath in exampleFiles)
 {
+    if (!File.Exists(examplePath))
+    {
+        Console.Error.WriteLine($"File not found: {examplePath}");
+        Environment.ExitCode = 2;
+        return;
+    }
+
     Console.WriteLine();
     Console.WriteLine($"Validating: {Path.GetFileName(examplePath)}");
 
     var exampleJson = await File.ReadAllTextAsync(examplePath);
 
-    using var exampleDocument = JsonDocument.Parse(exampleJson);
+    JsonDocument exampleDocument;
 
-    var results = schema.Evaluate(
-        exampleDocument.RootElement,
-        new EvaluationOptions
+    try
+    {
+        exampleDocument = JsonDocument.Parse(exampleJson);
+    }
+    catch (JsonException ex)
+    {
+        Console.Error.WriteLine(
+            $"Invalid JSON in {Path.GetFileName(examplePath)}: {ex.Message}"
+        );
+
+        Environment.ExitCode = 2;
+        return;
+    }
+
+    using (exampleDocument)
+    {
+        var results = schema.Evaluate(
+            exampleDocument.RootElement,
+            new EvaluationOptions
+            {
+                OutputFormat = OutputFormat.List,
+                RequireFormatValidation = true
+            }
+        );
+
+        Console.WriteLine(
+            results.IsValid
+                ? "Validation PASSED"
+                : "Validation FAILED"
+        );
+
+        if (!results.IsValid)
         {
-            OutputFormat = OutputFormat.List,
-            RequireFormatValidation = true
+            hasValidationFailures = true;
         }
-    );
-
-    Console.WriteLine(
-        results.IsValid
-            ? "Validation PASSED"
-            : "Validation FAILED"
-    );
+    }
 }
+
+Environment.ExitCode = hasValidationFailures ? 1 : 0;
