@@ -86,6 +86,24 @@ JSON Schema Draft 2020-12 implementations:
 - JsonSchema.Net 9.4.1 (.NET 8 / C#)
 - AJV 8 with ajv-formats 2 (Node.js / JavaScript)
 
+### Reproducing the JavaScript interoperability tests
+
+Node.js and npm are required only for these optional tests.
+
+From the repository root:
+
+```powershell
+cd tests/interoperability
+npm ci
+npm test
+```
+
+The test suite validates all five example records using AJV
+with JSON Schema Draft 2020-12.
+
+All five examples must produce their expected validation
+results for the test suite to pass.
+
 Both implementations produced the expected results for all five
 prototype example records:
 
