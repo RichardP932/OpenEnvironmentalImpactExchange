@@ -1,0 +1,16 @@
+{
+  "name": "interoperability",
+  "version": "1.0.0",
+  "description": "",
+  "main": "validate.js",
+  "scripts": {
+    "test": "node validate.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^2.1.1"
+  }
+}
