@@ -78,6 +78,29 @@ These distinctions are fundamental to the project.
 4. Avoid dependence on a particular cloud provider or application.
 5. Enable independent implementations and interoperability.
 
+## Cross-language validation
+
+The OEIE v0.1.0 schema has been tested with two independent
+JSON Schema Draft 2020-12 implementations:
+
+- JsonSchema.Net 9.4.1 (.NET 8 / C#)
+- AJV 8 with ajv-formats 2 (Node.js / JavaScript)
+
+Both implementations produced the expected results for all five
+prototype example records:
+
+- invalid-date.json - rejected
+- invalid-incomplete-coordinates.json - rejected
+- invalid-unknown-type.json - rejected
+- valid-heatwave.json - accepted
+- valid-minimal-with-evidence.json - accepted
+
+Tested on 14 October 2026.
+
+These tests demonstrate agreement for the current examples.
+They do not constitute comprehensive JSON Schema conformance
+testing or certification of OEIE as an interoperability standard.
+
 ## Development
 
 OEIE is currently an experimental prototype. Its schema, vocabulary and validation behaviour require further development and review before being presented as a stable exchange standard.
