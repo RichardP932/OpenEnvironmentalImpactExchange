@@ -19,7 +19,8 @@ const examples = [
     ["invalid-incomplete-coordinates.json", false],
     ["invalid-unknown-type.json", false],
     ["valid-heatwave.json", true],
-    ["valid-minimal-with-evidence.json", true]
+    ["valid-minimal-with-evidence.json", true],
+    ["valid-house-martin-mortality.json", true]
 ];
 
 let allCorrect = true;

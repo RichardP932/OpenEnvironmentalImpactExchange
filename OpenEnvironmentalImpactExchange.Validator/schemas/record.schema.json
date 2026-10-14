@@ -234,6 +234,25 @@
         "description": {
           "type": "string"
         },
+        "affectedEntity": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "commonName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scientificName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "estimatedCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
         "startDate": {
           "type": "string",
           "format": "date"
