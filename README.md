@@ -123,4 +123,17 @@ testing or certification of OEIE as an interoperability standard.
 
 OEIE is currently an experimental prototype. Its schema, vocabulary and validation behaviour require further development and review before being presented as a stable exchange standard.
 
-Licensing and contribution arrangements have not yet been finalised.
+OEIE is released under the MIT licence. See the LICENSE file for details. Formal contribution guidelines are still being developed.
+
+## Community and Support
+
+Open Environmental Impact Exchange (OEIE) is an independent, open-source project. We welcome questions, feedback and collaboration from researchers, conservation organisations, public bodies and software developers worldwide.
+
+- **Questions and support:** Use [GitHub Discussions](https://github.com/RichardP932/OpenEnvironmentalImpactExchange/discussions) to ask questions about OEIE or how to use it.
+- **Ideas and collaboration:** Use GitHub Discussions to propose improvements, discuss interoperability with existing environmental data standards or explore potential collaborations.
+- **Bug reports:** Use [GitHub Issues](https://github.com/RichardP932/OpenEnvironmentalImpactExchange/issues) to report defects or unexpected behaviour.
+- **Code contributions:** Pull requests are welcome. Please open a discussion first for substantial changes to the exchange specification.
+
+OEIE is maintained independently on a part-time basis. Responses and reviews will be provided as time permits.
+
+Our goal is to develop an open, interoperable environmental impact exchange format that can be adopted and improved by organisations and individuals around the world.
